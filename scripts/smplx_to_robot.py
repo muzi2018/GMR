@@ -34,7 +34,7 @@ if __name__ == "__main__":
         choices=["unitree_g1", "unitree_g1_with_hands", "unitree_h1", "unitree_h1_2",
                  "booster_t1", "booster_t1_29dof","stanford_toddy", "fourier_n1", 
                 "engineai_pm01", "kuavo_s45", "hightorque_hi", "galaxea_r1pro", "berkeley_humanoid_lite", "booster_k1",
-                "pnd_adam_lite", "openloong", "tienkung"],
+                "pnd_adam_lite", "openloong", "tienkung", "urdf0924"],
         default="unitree_g1",
     )
     
@@ -141,7 +141,7 @@ if __name__ == "__main__":
             human_motion_data=retarget.scaled_human_data,
             # human_motion_data=smplx_data,
             human_pos_offset=np.array([0.0, 0.0, 0.0]),
-            show_human_body_name=False,
+            show_human_body_name=True,
             rate_limit=args.rate_limit,
         )
         if args.save_path is not None:

@@ -1,6 +1,6 @@
 # GMR: General Motion Retargeting
 
-  <a href="https://arxiv.org/abs/2505.02833">
+<a href="https://arxiv.org/abs/2505.02833">
     <img src="https://img.shields.io/badge/paper-arXiv%3A2505.02833-b31b1b.svg" alt="arXiv Paper"/>
   </a> <a href="https://arxiv.org/abs/2510.02252">
     <img src="https://img.shields.io/badge/paper-arXiv%3A2510.02252-b31b1b.svg" alt="arXiv Paper"/>
@@ -21,12 +21,13 @@
 ![GMR](./assets/GMR_pipeline.png)
 
 #### Key features of GMR:
+
 - Real-time high-quality retargeting, unlock the potential of real-time whole-body teleoperation, i.e., [TWIST](https://github.com/YanjieZe/TWIST).
 - Carefully tuned for good performance of RL tracking policies.
 - Support multiple humanoid robots and multiple human motion data formats (See our table below).
 
 > [!NOTE]
-> If you want this repo to support a new robot or a new human motion data format, send the robot files (`.xml`, `.urdf`, and meshes) / human motion data to <a href="mailto:lastyanjieze@gmail.com">Yanjie Ze</a> or create an issue, we will support it as soon as possible. And please make sure the robot files you sent can be open-sourced in this repo.
+> If you want this repo to support a new robot or a new human motion data format, send the robot files (`.xml`, `.urdf`, and meshes) / human motion data to `<a href="mailto:lastyanjieze@gmail.com">`Yanjie Ze`</a>` or create an issue, we will support it as soon as possible. And please make sure the robot files you sent can be open-sourced in this repo.
 
 This repo is licensed under the [MIT License](LICENSE).
 
@@ -36,10 +37,9 @@ Starting from its release, **GMR** has been massively used by the community. See
 - [arXiv 2025.08](https://arxiv.org/abs/2508.13444), *Switch4EAI: Leveraging Console Game Platform for Benchmarking Robotic Athletics*
 - [arXiv 2025.05](https://arxiv.org/abs/2505.02833), *TWIST: Teleoperated Whole-Body Imitation System*
 
-
-
 # News & Updates
-- **2025-10-15:** Now supporting [PAL Robotics' Talos](https://pal-robotics.com/robot/talos/), the 15th humanoid robot.
+
+- **2025-10-15:** Now supporting [PAL Robotics&#39; Talos](https://pal-robotics.com/robot/talos/), the 15th humanoid robot.
 - **2025-10-14:** GMR now supports [Nokov](https://www.nokov.com/) BVH data.
 - **2025-10-14:** Add a doc on ik config. See [DOC.md](DOC.md)
 - **2025-10-09:** Check [TWIST](https://github.com/YanjieZe/TWIST) open-sourced code for RL motion tracking.
@@ -50,7 +50,7 @@ Starting from its release, **GMR** has been massively used by the community. See
 - **2025-09-12:** GMR now supports [Tienkung](https://github.com/Open-X-Humanoid/TienKung-Lab), the 14th humanoid robot in the repo.
 - **2025-08-30:** GMR now supports [Unitree H1 2](https://www.unitree.com/cn/h1) and [PND Adam Lite](https://pndbotics.com/), the 12th and 13th humanoid robots in the repo.
 - **2025-08-28:** GMR now supports [Booster T1](https://www.boosterobotics.com/) for both 23dof and 29dof.
-- **2025-08-28:** GMR now supports using exported offline FBX motion data from [OptiTrack](https://www.optitrack.com/). 
+- **2025-08-28:** GMR now supports using exported offline FBX motion data from [OptiTrack](https://www.optitrack.com/).
 - **2025-08-27:** GMR now supports [Berkeley Humanoid Lite](https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets), the 11th humanoid robot in the repo.
 - **2025-08-24:** GMR now supports [Unitree H1](https://www.unitree.com/h1/), the 10th humanoid robot in the repo.
 - **2025-08-24:** GMR now supports velocity limits for the robot motors, `use_velocity_limit=True` by default in `GeneralMotionRetargeting` class (and we use 3*pi as the velocity limit by default); we also add printing of robot DoF/Body/Motor names and their IDs by default, and you can access them via `robot_dof_names`, `robot_body_names`, and `robot_motor_names` attributes.
@@ -91,93 +91,30 @@ Starting from its release, **GMR** has been massively used by the community. See
     </td>
   </tr>
 
-  <tr>
-    <td align="center">
-      <b>Demo 6</b><br>
-      Kuavo robot picking up a box.<br>
-      <video src="https://github.com/user-attachments/assets/02fc8f41-c363-484b-a329-4f4e83ed5b80" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 7</b><br>
-      Unitree H1 robot doing a ChaCha dance.<br>
-      <video src="https://github.com/user-attachments/assets/28ee6f0f-be30-42bb-8543-cf1152d97724" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 8</b><br>
-      Booster T1 robot jumping (view 1).<br>
-      <video src="https://github.com/user-attachments/assets/2c75a146-e28f-4327-930f-5281bfc2ca9c" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 9</b><br>
-      Booster T1 robot jumping (view 2).<br>
-      <video src="https://github.com/user-attachments/assets/ff10c7ef-4357-4789-9219-23c6db8dba6d" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 10</b><br>
-      Unitree H1-2 robot jumping.<br>
-      <video src="https://github.com/user-attachments/assets/2382d8ce-7902-432f-ab45-348a11eeb312" width="200" controls></video>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      <b>Demo 11</b><br>
-      PND Adam Lite robot.<br>
-      <video src="https://github.com/user-attachments/assets/a8ef1409-88f1-4393-9cd0-d2b14216d2a4" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 12</b><br>
-      Tienkung robot walking.<br>
-      <video src="https://github.com/user-attachments/assets/7a775ecc-4254-450c-a3eb-49e843b8e331" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 13</b><br>
-      Extracting human pose (GVHMR + GMR).<br>
-      <a href="https://www.bilibili.com/video/BV1Tnpmz9EaE">▶ Watch on Bilibili</a>
-    </td>
-    <td align="center">
-      <b>Demo 14</b><br>
-      PAL Robotics’ Talos robot fighting.<br>
-      <video src="https://github.com/user-attachments/assets/3ec0bf80-80c1-4181-a623-dc2b072c2ca2" width="200" controls></video>
-    </td>
-    <td align="center">
-      <b>Demo 15</b><br>
-      (Optional placeholder if you add a new one later!)<br>
-      <i>Coming soon...</i>
-    </td>
-  </tr>
-</table>
-
-
 ## Supported Robots and Data Formats
 
-
-
-| Assigned ID | Robot/Data Format | Robot DoF | SMPLX ([AMASS](https://amass.is.tue.mpg.de/), [OMOMO](https://github.com/lijiaman/omomo_release)) | BVH [LAFAN1](https://github.com/ubisoft/ubisoft-laforge-animation-dataset)| FBX ([OptiTrack](https://www.optitrack.com/)) |  BVH [Nokov](https://www.nokov.com/) | More formats coming soon | 
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | Unitree G1 `unitree_g1` | Leg (2\*6) + Waist (3) + Arm (2\*7) = 29 | ✅ | ✅ | ✅ |  ✅ |
-| 1 | Unitree G1 with Hands `unitree_g1_with_hands` | Leg (2\*6) + Waist (3) + Arm (2\*7) + Hand (2\*7) = 43 | ✅ | ✅ | ✅ | TBD |
-| 2 | Unitree H1 `unitree_h1` | Leg (2\*5) + Waist (1) + Arm (2\*4) = 19 | ✅ | TBD | TBD | TBD |
-| 3 | Unitree H1 2 `unitree_h1_2` | Leg (2\*6) + Waist (1) + Arm (2\*7) = 27 | ✅ | TBD | TBD | TBD |
-| 4 | Booster T1 `booster_t1` | TBD | ✅ |  TBD  | TBD |
-| 5 | Booster T1 29dof `booster_t1_29dof` | TBD | ✅ |  ✅  | TBD | 
-| 6 | Booster K1 `booster_k1` | Neck (2) + Arm (2\*4) + Leg (2\*6) = 22 | ✅ | TBD | TBD |
-| 7 | Stanford ToddlerBot `stanford_toddy` | TBD | ✅ | ✅ | TBD |
-| 8 | Fourier N1 `fourier_n1` | TBD | ✅ | ✅ | TBD |
-| 9 | ENGINEAI PM01 `engineai_pm01` | TBD | ✅ | ✅ | TBD |
-| 10 | HighTorque Hi `hightorque_hi` | Head (2) + Arm (2\*5) + Waist (1) + Leg (2\*6) = 25 | ✅ | TBD | TBD |
-| 11 | Galaxea R1 Pro `galaxea_r1pro` (this is a wheeled robot!) |  Base (6) + Torso (4) + Arm (2*7) = 24 | ✅ | TBD | TBD |
-| 12 | Kuavo `kuavo_s45` |  Head (2) + Arm (2\*7) + Leg (2\*6) = 28 | ✅ | TBD | TBD |
-| 13 | Berkeley Humanoid Lite `berkeley_humanoid_lite` (need further tuning) | Leg (2\*6) + Arm (2\*5) = 22 | ✅ | TBD | TBD |
-| 14 | PND Adam Lite `pnd_adam_lite`  | Leg (2\*6) + Waist (3) + Arm (2\*5) = 25 | ✅ | TBD | TBD |
-| 15 | Tienkung `tienkung`  | Leg (2\*6) + Arm (2\*4) = 20 | ✅ | TBD | TBD |
-| 16 | PAL Robotics' Talos `pal_talos`  | Head (2) + Arm (2\*7) + Waist (2) + Leg (2\*6) = 30 | ✅ | TBD | TBD |
-| More robots coming soon ! |
-| 16 | AgiBot A2 `agibot_a2` | TBD | TBD | TBD | TBD |
-| 17 | OpenLoong `openloong` | TBD | TBD | TBD | TBD |
-
-
-
+| Assigned ID               | Robot/Data Format                                                       | Robot DoF                                              | SMPLX ([AMASS](https://amass.is.tue.mpg.de/), [OMOMO](https://github.com/lijiaman/omomo_release)) | BVH[LAFAN1](https://github.com/ubisoft/ubisoft-laforge-animation-dataset) | FBX ([OptiTrack](https://www.optitrack.com/)) | BVH[Nokov](https://www.nokov.com/) | More formats coming soon |
+| ------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------ | ------------------------------- | ------------------------ |
+| 0                         | Unitree G1 `unitree_g1`                                               | Leg (2\*6) + Waist (3) + Arm (2\*7) = 29               | ✅                                                                                          | ✅                                                                     | ✅                                         | ✅                              |                          |
+| 1                         | Unitree G1 with Hands `unitree_g1_with_hands`                         | Leg (2\*6) + Waist (3) + Arm (2\*7) + Hand (2\*7) = 43 | ✅                                                                                          | ✅                                                                     | ✅                                         | TBD                             |                          |
+| 2                         | Unitree H1 `unitree_h1`                                               | Leg (2\*5) + Waist (1) + Arm (2\*4) = 19               | ✅                                                                                          | TBD                                                                    | TBD                                        | TBD                             |                          |
+| 3                         | Unitree H1 2 `unitree_h1_2`                                           | Leg (2\*6) + Waist (1) + Arm (2\*7) = 27               | ✅                                                                                          | TBD                                                                    | TBD                                        | TBD                             |                          |
+| 4                         | Booster T1 `booster_t1`                                               | TBD                                                    | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 5                         | Booster T1 29dof `booster_t1_29dof`                                   | TBD                                                    | ✅                                                                                          | ✅                                                                     | TBD                                        |                                 |                          |
+| 6                         | Booster K1 `booster_k1`                                               | Neck (2) + Arm (2\*4) + Leg (2\*6) = 22                | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 7                         | Stanford ToddlerBot `stanford_toddy`                                  | TBD                                                    | ✅                                                                                          | ✅                                                                     | TBD                                        |                                 |                          |
+| 8                         | Fourier N1 `fourier_n1`                                               | TBD                                                    | ✅                                                                                          | ✅                                                                     | TBD                                        |                                 |                          |
+| 9                         | ENGINEAI PM01 `engineai_pm01`                                         | TBD                                                    | ✅                                                                                          | ✅                                                                     | TBD                                        |                                 |                          |
+| 10                        | HighTorque Hi `hightorque_hi`                                         | Head (2) + Arm (2\*5) + Waist (1) + Leg (2\*6) = 25    | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 11                        | Galaxea R1 Pro `galaxea_r1pro` (this is a wheeled robot!)             | Base (6) + Torso (4) + Arm (2*7) = 24                  | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 12                        | Kuavo `kuavo_s45`                                                     | Head (2) + Arm (2\*7) + Leg (2\*6) = 28                | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 13                        | Berkeley Humanoid Lite `berkeley_humanoid_lite` (need further tuning) | Leg (2\*6) + Arm (2\*5) = 22                           | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 14                        | PND Adam Lite `pnd_adam_lite`                                         | Leg (2\*6) + Waist (3) + Arm (2\*5) = 25               | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 15                        | Tienkung `tienkung`                                                   | Leg (2\*6) + Arm (2\*4) = 20                           | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| 16                        | PAL Robotics' Talos `pal_talos`                                       | Head (2) + Arm (2\*7) + Waist (2) + Leg (2\*6) = 30    | ✅                                                                                          | TBD                                                                    | TBD                                        |                                 |                          |
+| More robots coming soon ! |                                                                         |                                                        |                                                                                             |                                                                        |                                            |                                 |                          |
+| 16                        | AgiBot A2 `agibot_a2`                                                 | TBD                                                    | TBD                                                                                         | TBD                                                                    | TBD                                        |                                 |                          |
+| 17                        | OpenLoong `openloong`                                                 | TBD                                                    | TBD                                                                                         | TBD                                                                    | TBD                                        |                                 |                          |
 
 ## Installation
 
@@ -208,6 +145,7 @@ conda install -c conda-forge libstdcxx-ng -y
 ## Data Preparation
 
 [[SMPLX](https://github.com/vchoutas/smplx) body model] download SMPL-X body models to `assets/body_models` from [SMPL-X](https://smpl-x.is.tue.mpg.de/) and then structure as follows:
+
 ```bash
 - assets/body_models/smplx/
 -- SMPLX_NEUTRAL.pkl
@@ -220,7 +158,6 @@ conda install -c conda-forge libstdcxx-ng -y
 [[OMOMO](https://github.com/lijiaman/omomo_release) motion data] download raw OMOMO data to any folder you want from [this google drive file](https://drive.google.com/file/d/1tZVqLB7II0whI-Qjz-z-AU3ponSEyAmm/view?usp=sharing). And process the data into the SMPL-X format using `scripts/convert_omomo_to_smplx.py`.
 
 [[LAFAN1](https://github.com/ubisoft/ubisoft-laforge-animation-dataset) motion data] download raw LAFAN1 bvh files from [the official repo](https://github.com/ubisoft/ubisoft-laforge-animation-dataset), i.e., [lafan1.zip](https://github.com/ubisoft/ubisoft-laforge-animation-dataset/blob/master/lafan1/lafan1.zip).
-
 
 ## Human/Robot Motion Data Formulation
 
@@ -275,8 +212,6 @@ Then, run the command below to retarget the extracted human pose data to your ro
 python scripts/gvhmr_to_robot.py --gvhmr_pred_file <path_to_hmr4d_results.pt> --robot unitree_g1 --record_video
 ```
 
-
-
 ## Retargeting from BVH (LAFAN1, Nokov) to Robot
 
 Retarget a single motion:
@@ -286,10 +221,10 @@ Retarget a single motion:
 python scripts/bvh_to_robot.py --bvh_file <path_to_bvh_data> --robot <path_to_robot_data> --save_path <path_to_save_robot_data.pkl> --rate_limit --format <format>
 ```
 
-By default you should see the visualization of the retargeted robot motion in a mujoco window. 
+By default you should see the visualization of the retargeted robot motion in a mujoco window.
+
 - `--rate_limit` is used to limit the rate of the retargeted robot motion to keep the same as the human motion. If you want it as fast as possible, remove `--rate_limit`.
 - `--format` is used to specify the format of the BVH data. Supported formats are `lafan1` and `nokov`.
-
 
 Retarget a folder of motions:
 
@@ -306,9 +241,8 @@ By default there is no visualization for batch retargeting.
 Retarget a single motion:
 
 1. Install `fbx_sdk` by following [these instructions](https://github.com/nv-tlabs/ASE/tree/main/ase/poselib#importing-from-fbx) and [these instructions](https://github.com/nv-tlabs/ASE/issues/61#issuecomment-2670315114). You will probably need a new conda environment for this.
-
 2. Activate the conda environment where you installed `fbx_sdk`.
-Use the following command to extract motion data from your `.fbx` file:
+   Use the following command to extract motion data from your `.fbx` file:
 
 ```bash
 cd third_party
@@ -323,7 +257,7 @@ conda activate gmr
 python scripts/fbx_offline_to_robot.py --motion_file <path_to_saved_motion_data.pkl> --robot <path_to_robot_data> --save_path <path_to_save_robot_data.pkl> --rate_limit
 ```
 
-By default you should see the visualization of the retargeted robot motion in a mujoco window. 
+By default you should see the visualization of the retargeted robot motion in a mujoco window.
 
 - `--rate_limit` is used to limit the rate of the retargeted robot motion to keep the same as the human motion. If you want it as fast as possible, remove `--rate_limit`.
 
@@ -362,17 +296,18 @@ python scripts/vis_robot_motion_dataset.py --robot <robot_name> --robot_motion_f
 ```
 
 After launching the MuJoCo visualization window and clicking on it, you can use the following keyboard controls::
+
 * `[`: play the previous motion
 * `]`: play the next motion
 * `space`: toggle play/pause
 
 ## Speed Benchmark
 
-| CPU | Retargeting Speed |
-| --- | --- |
-| AMD Ryzen Threadripper 7960X 24-Cores | 60~70 FPS |
-| 13th Gen Intel Core i9-13900K 24-Cores | 35~45 FPS |
-| TBD | TBD |
+| CPU                                    | Retargeting Speed |
+| -------------------------------------- | ----------------- |
+| AMD Ryzen Threadripper 7960X 24-Cores  | 60~70 FPS         |
+| 13th Gen Intel Core i9-13900K 24-Cores | 35~45 FPS         |
+| TBD                                    | TBD               |
 
 ## Citation
 
@@ -421,11 +356,11 @@ The original robot models can be found at the following locations:
 * [Berkley Humanoid Lite](https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets): CC-BY-SA-4.0 license
 * [Booster K1](https://www.boosterobotics.com/)
 * [Booster T1](https://booster.feishu.cn/wiki/UvowwBes1iNvvUkoeeVc3p5wnUg) ([English](https://booster.feishu.cn/wiki/DtFgwVXYxiBT8BksUPjcOwG4n4f))
-* [EngineAI PM01](https://github.com/engineai-robotics/engineai_ros2_workspace): [Link to file](https://github.com/engineai-robotics/engineai_ros2_workspace/blob/community/src/simulation/mujoco/assets/resource) 
+* [EngineAI PM01](https://github.com/engineai-robotics/engineai_ros2_workspace): [Link to file](https://github.com/engineai-robotics/engineai_ros2_workspace/blob/community/src/simulation/mujoco/assets/resource)
 * [Fourier N1](https://github.com/FFTAI/Wiki-GRx-Gym): [Link to file](https://github.com/FFTAI/Wiki-GRx-Gym/tree/FourierN1/legged_gym/resources/robots/N1)
 * [Galaxea R1 Pro](https://galaxea-dynamics.com/): MIT license
 * [HighToqure Hi](https://www.hightorquerobotics.com/hi/)
 * [LEJU Kuavo S45](https://gitee.com/leju-robot/kuavo-ros-opensource/blob/master/LICENSE): MIT license
-* [PAL Robotics' Talos](https://github.com/google-deepmind/mujoco_menagerie): [Link to file](https://github.com/google-deepmind/mujoco_menagerie/tree/main/pal_talos)
+* [PAL Robotics&#39; Talos](https://github.com/google-deepmind/mujoco_menagerie): [Link to file](https://github.com/google-deepmind/mujoco_menagerie/tree/main/pal_talos)
 * [Toddlerbot](https://github.com/hshi74/toddlerbot): [Link to file](https://github.com/hshi74/toddlerbot/tree/main/toddlerbot/descriptions/toddlerbot_active)
 * [Unitree G1](https://github.com/unitreerobotics/unitree_ros): [Link to file](https://github.com/unitreerobotics/unitree_ros/tree/master/robots/g1_description)
