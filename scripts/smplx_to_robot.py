@@ -90,7 +90,7 @@ if __name__ == "__main__":
     
     robot_motion_viewer = RobotMotionViewer(robot_type=args.robot,
                                             motion_fps=aligned_fps,
-                                            transparent_robot=0,
+                                            transparent_robot=True,
                                             record_video=args.record_video,
                                             video_path=f"videos/{args.robot}_{args.smplx_file.split('/')[-1].split('.')[0]}.mp4",)
     
