@@ -54,7 +54,7 @@ class GeneralMotionRetargeting:
                 print(f"Motor ID {i}: {motor_name}")
 
         # Load the IK config
-        with open(IK_CONFIG_DICT[src_human][tgt_robot]) as f:
+        with open(IK_CONFIG_DICT[src_human][tgt_robot], encoding="utf-8-sig") as f:
             ik_config = json.load(f)
         if verbose:
             print("Use IK config: ", IK_CONFIG_DICT[src_human][tgt_robot])

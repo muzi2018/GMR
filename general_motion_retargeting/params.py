@@ -86,6 +86,7 @@ ROBOT_BASE_DICT = {
     "pnd_adam_lite": "pelvis",
     "tienkung": "Base_link",
     "pal_talos": "base_link",
+    "urdf0924": "pelvis",
 }
 
 VIEWER_CAM_DISTANCE_DICT = {
@@ -106,4 +107,5 @@ VIEWER_CAM_DISTANCE_DICT = {
     "pnd_adam_lite": 3.0,
     "tienkung": 3.0,
     "pal_talos": 3.0,
+    "urdf0924": 2.0,
 }
