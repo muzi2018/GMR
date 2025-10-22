@@ -132,6 +132,17 @@ if __name__ == "__main__":
         ('left_shoulder', 'left_elbow'), ('left_elbow', 'left_wrist'),
         ('right_shoulder', 'right_elbow'), ('right_elbow', 'right_wrist')
     ]
+    # Compute bone lengths
+    bone_lengths = {}
+    for joint_a, joint_b in skeleton_edges:
+        pos_a = frame0_positions[joint_a]
+        pos_b = frame0_positions[joint_b]
+        length = np.linalg.norm(pos_b - pos_a)
+        bone_lengths[f"{joint_a}-{joint_b}"] = length
+
+    # Print results
+    for bone, length in bone_lengths.items():
+        print(f"{bone}: {length:.4f} meters")
 
     # Prepare the 3D plot
     fig = plt.figure()
