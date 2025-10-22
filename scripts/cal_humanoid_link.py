@@ -1,5 +1,7 @@
 ﻿import xml.etree.ElementTree as ET
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 def parse_urdf(urdf_file_path):
     tree = ET.parse(urdf_file_path)
@@ -29,7 +31,6 @@ def parse_urdf(urdf_file_path):
     return joints, links
 
 def compute_link_positions(joints, key_links, root_link='pelvis'):
-    """Compute approximate world positions of links by traversing URDF tree."""
     positions = {}
     visited = set()
 
@@ -43,7 +44,6 @@ def compute_link_positions(joints, key_links, root_link='pelvis'):
                     visited.add(child_link)
                     traverse(child_link, pos)
 
-    # Root link assumed at origin
     positions[root_link] = np.zeros(3)
     visited.add(root_link)
     traverse(root_link)
@@ -58,6 +58,32 @@ def compute_bone_lengths(positions, skeleton_edges):
         if a in positions and b in positions:
             bone_lengths[f"{a}-{b}"] = np.linalg.norm(positions[b] - positions[a])
     return bone_lengths
+
+def plot_skeleton(positions, skeleton_edges, title="Humanoid Skeleton"):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plot joints
+    for link, pos in positions.items():
+        ax.scatter(pos[0], pos[1], pos[2], c='r', s=40)
+        ax.text(pos[0], pos[1], pos[2], link, size=8)
+
+    # Plot bones
+    for a, b in skeleton_edges:
+        if a in positions and b in positions:
+            pos_a = positions[a]
+            pos_b = positions[b]
+            xs = [pos_a[0], pos_b[0]]
+            ys = [pos_a[1], pos_b[1]]
+            zs = [pos_a[2], pos_b[2]]
+            ax.plot(xs, ys, zs, c='b', linewidth=2)
+
+    ax.set_box_aspect([1, 1, 1])
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    plt.title(title)
+    plt.show()
 
 if __name__ == "__main__":
     urdf_path = "/home/wang/URDFly/descriptions/urdf0924/urdf/urdf0924.urdf"
@@ -91,3 +117,6 @@ if __name__ == "__main__":
     print("\nSkeleton bone lengths (meters):")
     for bone, length in bone_lengths.items():
         print(f"{bone}: {length:.4f}")
+
+    # Plot
+    plot_skeleton(positions, skeleton_edges, title="URDF0924 Skeleton")
