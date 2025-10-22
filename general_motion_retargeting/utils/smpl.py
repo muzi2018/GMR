@@ -201,7 +201,9 @@ def get_smplx_data_offline_fast(smplx_data, body_model, smplx_output, tgt_fps=30
             idx2 = min(idx1 + 1, num_frames - 1)
             alpha = t - idx1
             
-            rot1 = R.from_rotvec(global_orient[idx1])
+            rot1 = R.from_rotvec(global_orient[idx1]) # rotvec = axis * angle
+            # angle = np.linalg.norm(rot1.as_rotvec())
+            # axis = rot.as_rotvec() / angle
             rot2 = R.from_rotvec(global_orient[idx2])
             interp_rot = slerp(rot1, rot2, alpha)
             global_orient_interp.append(interp_rot.as_rotvec())

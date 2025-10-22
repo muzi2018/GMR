@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import pathlib
 import os
 import time
@@ -8,7 +8,9 @@ import numpy as np
 from general_motion_retargeting import GeneralMotionRetargeting as GMR
 from general_motion_retargeting import RobotMotionViewer
 from general_motion_retargeting.utils.smpl import load_smplx_file, get_smplx_data_offline_fast
-
+import numpy as np
+# import trimesh
+# import pyrender
 from rich import print
 
 if __name__ == "__main__":
@@ -96,94 +98,27 @@ if __name__ == "__main__":
     tgt_fps = 30
     smplx_data_frames, aligned_fps = get_smplx_data_offline_fast(smplx_data, body_model, smplx_output, tgt_fps=tgt_fps)
     
-   
-    # Initialize the retargeting system
-    retarget = GMR(
-        actual_human_height=actual_human_height,
-        src_human="smplx",
-        tgt_robot=args.robot,
-    )
-    
-    robot_motion_viewer = RobotMotionViewer(robot_type=args.robot,
-                                            motion_fps=aligned_fps,
-                                            transparent_robot=True,
-                                            record_video=args.record_video,
-                                            video_path=f"videos/{args.robot}_{args.smplx_file.split('/')[-1].split('.')[0]}.mp4",)
-    
+    # Suppose smplx_data_frames[0] is a dict or similar structure
+    frame0 = smplx_data_frames[0]
 
-    curr_frame = 0
-    # FPS measurement variables
-    fps_counter = 0
-    fps_start_time = time.time()
-    fps_display_interval = 2.0  # Display FPS every 2 seconds
-    
-    if args.save_path is not None:
-        save_dir = os.path.dirname(args.save_path)
-        if save_dir:  # Only create directory if it's not empty
-            os.makedirs(save_dir, exist_ok=True)
-        qpos_list = []
-    
-    # Start the viewer
-    i = 0
+    # Create a human pose dictionary
+    human_pose = {
+        'pelvis': frame0['pelvis'],
+        'spine3': frame0['spine3'],
+        'left_hip': frame0['left_hip'],
+        'right_hip': frame0['right_hip'],
+        'left_knee': frame0['left_knee'],
+        'right_knee': frame0['right_knee'],
+        'left_foot': frame0['left_foot'],
+        'right_foot': frame0['right_foot'],
+        'left_shoulder': frame0['left_shoulder'],
+        'right_shoulder': frame0['right_shoulder'],
+        'left_elbow': frame0['left_elbow'],
+        'right_elbow': frame0['right_elbow'],
+        'left_wrist': frame0['left_wrist'],
+        'right_wrist': frame0['right_wrist']
+    }
 
-    while True:
-        if args.loop:
-            i = (i + 1) % len(smplx_data_frames)
-        else:
-            i += 1
-            if i >= len(smplx_data_frames):
-                break
-        
-        # FPS measurement
-        fps_counter += 1
-        current_time = time.time()
-        if current_time - fps_start_time >= fps_display_interval:
-            actual_fps = fps_counter / (current_time - fps_start_time)
-            print(f"Actual rendering FPS: {actual_fps:.2f}")
-            fps_counter = 0
-            fps_start_time = current_time
-        
-        # Update task targets.
-        smplx_data = smplx_data_frames[i]
-
-        # retarget
-        qpos = retarget.retarget(smplx_data)
-
-        # visualize
-        robot_motion_viewer.step(
-            root_pos=qpos[:3],
-            root_rot=qpos[3:7],
-            dof_pos=qpos[7:],
-            human_motion_data=retarget.scaled_human_data,
-            # human_motion_data=smplx_data,
-            human_pos_offset=np.array([0.0, 0.0, 0.0]),
-            show_human_body_name=True,
-            rate_limit=args.rate_limit,
-        )
-        if args.save_path is not None:
-            qpos_list.append(qpos)
-            
-    if args.save_path is not None:
-        import pickle
-        root_pos = np.array([qpos[:3] for qpos in qpos_list])
-        # save from wxyz to xyzw
-        root_rot = np.array([qpos[3:7][[1,2,3,0]] for qpos in qpos_list])
-        dof_pos = np.array([qpos[7:] for qpos in qpos_list])
-        local_body_pos = None
-        body_names = None
-        
-        motion_data = {
-            "fps": aligned_fps,
-            "root_pos": root_pos,
-            "root_rot": root_rot,
-            "dof_pos": dof_pos,
-            "local_body_pos": local_body_pos,
-            "link_body_list": body_names,
-        }
-        with open(args.save_path, "wb") as f:
-            pickle.dump(motion_data, f)
-        print(f"Saved to {args.save_path}")
-            
-      
     
-    robot_motion_viewer.close()
+    exit()
+    
