@@ -211,8 +211,8 @@ class RobotMotionViewer:
             R_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
             R_xyzw = R.from_matrix(R_rot).as_quat()
             R_wxyz = np.roll(R_xyzw, 1)
-            
-            if human_motion_data is not None and body_name in self.ik_match_table1:
+
+            if human_motion_data is not None and body_name in self.ik_match_table1 :
                 human_body_name = self.ik_match_table1[body_name][0]
                 (H_pos, H_rot) = human_motion_data[human_body_name]
                 rel_vec = R_pos - H_pos # robot link pos - human link pos
@@ -220,7 +220,6 @@ class RobotMotionViewer:
                 print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
                 print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
 
-            
                 draw_frame(
                     R_pos,
                     R_rot,
@@ -229,6 +228,14 @@ class RobotMotionViewer:
                     joint_name=body_name  # optional, label the link
                 )
 
+            if body_name == "world":
+                draw_frame(
+                    R_pos,
+                    R_rot,
+                    self.viewer,
+                    size=0.2,  # adjust size for visualization
+                    joint_name=body_name  # optional, label the link
+                )
         self.viewer.sync()
         if rate_limit is True:
             self.rate_limiter.sleep()
