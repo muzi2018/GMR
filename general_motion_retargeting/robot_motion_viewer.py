@@ -212,18 +212,18 @@ class RobotMotionViewer:
             rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link
             
             if human_motion_data is not None and body_name in self.ik_match_table1:
-                robot_body_name = self.ik_match_table1[body_name][0]
-                (hum_pos, hum_rot) = human_motion_data[robot_body_name]
+                human_body_name = self.ik_match_table1[body_name][0]
+                (hum_pos, hum_rot) = human_motion_data[human_body_name]
                 rel_vec = pos - hum_pos
-                print(f"[blue]{robot_body_name}[/blue]: Human Pos {hum_pos}, Robot Pos {pos}, Rel Vector {rel_vec}")
+                print(f"[blue]{human_body_name} , {hum_pos}, [blue]{body_name} {pos}, Rel Vector {rel_vec}")
             
-            draw_frame(
-                pos,
-                rot,
-                self.viewer,
-                size=0.05,  # adjust size for visualization
-                joint_name=body_name  # optional, label the link
-            )
+            # draw_frame(
+            #     pos,
+            #     rot,
+            #     self.viewer,
+            #     size=0.05,  # adjust size for visualization
+            #     joint_name=body_name  # optional, label the link
+            # )
 
         self.viewer.sync()
         if rate_limit is True:
