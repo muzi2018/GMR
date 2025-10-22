@@ -9,8 +9,8 @@ from general_motion_retargeting import GeneralMotionRetargeting as GMR
 from general_motion_retargeting import RobotMotionViewer
 from general_motion_retargeting.utils.smpl import load_smplx_file, get_smplx_data_offline_fast
 import numpy as np
-# import trimesh
-# import pyrender
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from rich import print
 
 if __name__ == "__main__":
@@ -119,6 +119,45 @@ if __name__ == "__main__":
         'right_wrist': frame0['right_wrist']
     }
 
+    # Example: frame0 joints (positions only)
+    frame0_positions = {joint: frame0[joint][0] for joint in frame0}  # extract positions only
+
+    # Define the connections (edges) between joints to form a skeleton
+    skeleton_edges = [
+        ('pelvis', 'spine3'),
+        ('pelvis', 'left_hip'), ('pelvis', 'right_hip'),
+        ('left_hip', 'left_knee'), ('left_knee', 'left_foot'),
+        ('right_hip', 'right_knee'), ('right_knee', 'right_foot'),
+        ('spine3', 'left_shoulder'), ('spine3', 'right_shoulder'),
+        ('left_shoulder', 'left_elbow'), ('left_elbow', 'left_wrist'),
+        ('right_shoulder', 'right_elbow'), ('right_elbow', 'right_wrist')
+    ]
+
+    # Prepare the 3D plot
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plot joints
+    for joint, pos in frame0_positions.items():
+        ax.scatter(pos[0], pos[1], pos[2], c='r', s=40)
+        ax.text(pos[0], pos[1], pos[2], joint, size=8)
+
+    # Plot bones
+    for joint_a, joint_b in skeleton_edges:
+        pos_a = frame0_positions[joint_a]
+        pos_b = frame0_positions[joint_b]
+        xs = [pos_a[0], pos_b[0]]
+        ys = [pos_a[1], pos_b[1]]
+        zs = [pos_a[2], pos_b[2]]
+        ax.plot(xs, ys, zs, c='b')
+
+    # Set equal aspect ratio
+    ax.set_box_aspect([1,1,1])
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    plt.title("SMPLX Skeleton Frame 0")
+    plt.show()
     
     exit()
     
