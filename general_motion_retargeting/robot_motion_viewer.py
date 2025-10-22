@@ -10,7 +10,6 @@ import numpy as np
 from rich import print
 import json
 from .params import ROBOT_XML_DICT, IK_CONFIG_DICT
-
 def compute_distance_vectors(self, ik_table, pos_offset_dict=None, visualize=False):
     """
     Compute distance vectors from robot links to target links (from IK table).
@@ -209,21 +208,26 @@ class RobotMotionViewer:
         for i in range(self.model.nbody):
             body_name = self.model.body(i).name
             pos = self.data.xpos[i]           # global position of the link
-            rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link
+            rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
+            quat_xyzw = R.from_matrix(rot).as_quat()
+            quat_wxyz = np.roll(quat_xyzw, 1)
             
             if human_motion_data is not None and body_name in self.ik_match_table1:
                 human_body_name = self.ik_match_table1[body_name][0]
                 (hum_pos, hum_rot) = human_motion_data[human_body_name]
-                rel_vec = pos - hum_pos
-                print(f"[blue]{human_body_name} , {hum_pos}, [blue]{body_name} {pos}, Rel Vector {rel_vec}")
+                rel_vec = pos - hum_pos # robot link pos - human link pos
+                rel_rot = R.from_matrix(rot).inv() * R.from_quat(hum_rot, scalar_first=True)
+                print(f"[blue]{human_body_name} , {hum_pos}, {body_name} {pos}, Rel Vector {rel_vec}")
+                print(f"[yellow]{human_body_name} , {hum_rot}, {body_name} {quat_wxyz}, Rel Vector {rel_rot.as_quat()}")
+                
             
-            # draw_frame(
-            #     pos,
-            #     rot,
-            #     self.viewer,
-            #     size=0.05,  # adjust size for visualization
-            #     joint_name=body_name  # optional, label the link
-            # )
+                draw_frame(
+                    pos,
+                    rot,
+                    self.viewer,
+                    size=0.05,  # adjust size for visualization
+                    joint_name=body_name  # optional, label the link
+                )
 
         self.viewer.sync()
         if rate_limit is True:
