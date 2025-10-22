@@ -207,6 +207,11 @@ if __name__ == "__main__":
         'left_wrist': frame0['left_wrist'],
         'right_wrist': frame0['right_wrist']
     }
+    print("Human pose (positions in meters):\n")
+    for joint, pos in human_pose.items():
+        # pos[0] if pos contains multiple frames, or just pos if it's a single 3D vector
+        joint_pos = pos[0] if isinstance(pos, np.ndarray) and pos.ndim > 1 else pos
+        print(f"{joint}: {joint_pos}")
 
     # Example: frame0 joints (positions only)
     frame0_positions = {joint: frame0[joint][0] for joint in frame0}  # extract positions only
@@ -229,9 +234,9 @@ if __name__ == "__main__":
         length = np.linalg.norm(pos_b - pos_a)
         bone_lengths[f"{joint_a}-{joint_b}"] = length
 
-    # Print results
-    for bone, length in bone_lengths.items():
-        print(f"{bone}: {length:.4f} meters")
+    # # Print results
+    # for bone, length in bone_lengths.items():
+    #     print(f"{bone}: {length:.4f} meters")
 
 
     # Compute bone vectors (relative positions)
@@ -242,10 +247,10 @@ if __name__ == "__main__":
         vec = pos_b - pos_a  # relative vector from joint_a to joint_b
         bone_vectors[f"{joint_a}->{joint_b}"] = vec
 
-    # Print relative vectors
-    print("\nRelative bone vectors (meters):")
-    for bone, vec in bone_vectors.items():
-        print(f"{bone}: {vec}")
+    # # Print relative vectors
+    # print("\nRelative bone vectors (meters):")
+    # for bone, vec in bone_vectors.items():
+    #     print(f"{bone}: {vec}")
 
 
 
@@ -302,9 +307,9 @@ if __name__ == "__main__":
     for link, pos in positions.items():
         print(f"{link}: {pos}")
 
-    print("\nSkeleton bone lengths (meters):")
-    for bone, length in bone_lengths.items():
-        print(f"{bone}: {length:.4f}")
+    # print("\nSkeleton bone lengths (meters):")
+    # for bone, length in bone_lengths.items():
+    #     print(f"{bone}: {length:.4f}")
 
 
     # Compute relative bone vectors (child relative to parent)
@@ -314,9 +319,9 @@ if __name__ == "__main__":
             vec = positions[b] - positions[a]  # vector from parent to child
             bone_vectors[f"{a}->{b}"] = vec
 
-    print("\nRelative bone vectors (meters):")
-    for bone, vec in bone_vectors.items():
-        print(f"{bone}: {vec}")
+    # print("\nRelative bone vectors (meters):")
+    # for bone, vec in bone_vectors.items():
+    #     print(f"{bone}: {vec}")
 
 
     
