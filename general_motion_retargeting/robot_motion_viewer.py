@@ -8,6 +8,65 @@ from general_motion_retargeting import ROBOT_XML_DICT, ROBOT_BASE_DICT, VIEWER_C
 from loop_rate_limiters import RateLimiter
 import numpy as np
 from rich import print
+import json
+from .params import ROBOT_XML_DICT, IK_CONFIG_DICT
+
+def compute_distance_vectors(self, ik_table, pos_offset_dict=None, visualize=False):
+    """
+    Compute distance vectors from robot links to target links (from IK table).
+    
+    Args:
+        ik_table_dict: 'ik_match_table1' or 'ik_match_table2'
+        pos_offset_dict: optional dict of offsets per link
+        visualize: if True, draw arrows in the viewer
+    
+    Returns:
+        distances: dict {robot_link_name: distance_vector (3d np.array)}
+    """
+    table = getattr(self, ik_table)
+    distances = {}
+    
+    # clear previous geometry if visualizing
+    if visualize:
+        self.viewer.user_scn.ngeom = 0
+    
+    for robot_link, values in table.items():
+        target_name = values[0]
+        offset = np.array(values[3]) if len(values) > 3 else np.zeros(3)
+        if pos_offset_dict and robot_link in pos_offset_dict:
+            offset += pos_offset_dict[robot_link]
+        
+        # Robot link position
+        try:
+            robot_idx = self.model.body(robot_link).id
+            robot_pos = self.data.xpos[robot_idx]
+        except Exception:
+            continue
+        
+        # Target link position
+        try:
+            target_idx = self.model.body(target_name).id
+            target_pos = self.data.xpos[target_idx] + offset
+        except Exception:
+            target_pos = offset
+        
+        # Distance vector
+        vec = robot_pos - target_pos
+        distances[robot_link] = vec
+        
+        # Optional visualization
+        if visualize:
+            mid = (robot_pos + target_pos) / 2
+            dir_vec = vec / (np.linalg.norm(vec) + 1e-8)
+            draw_frame(
+                mid,
+                np.eye(3),
+                self.viewer,
+                size=np.linalg.norm(vec),
+                joint_name=f"{robot_link}_to_{target_name}"
+            )
+    
+    return distances
 
 
 def draw_frame(
@@ -55,7 +114,11 @@ class RobotMotionViewer:
                 video_height=480,
                 keyboard_callback=None,
                 ):
-        
+        # Load the IK config
+        with open(IK_CONFIG_DICT["smplx"]["urdf0924"], encoding="utf-8-sig") as f:
+            ik_config = json.load(f)
+            
+        self.ik_match_table1 = ik_config["ik_match_table1"]
         self.robot_type = robot_type
         self.xml_path = ROBOT_XML_DICT[robot_type]
         self.model = mj.MjModel.from_xml_path(str(self.xml_path))
@@ -142,6 +205,25 @@ class RobotMotionViewer:
                     pos_offset=human_pos_offset,
                     joint_name=human_body_name if show_human_body_name else None
                     )
+                
+        for i in range(self.model.nbody):
+            body_name = self.model.body(i).name
+            pos = self.data.xpos[i]           # global position of the link
+            rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link
+            
+            if human_motion_data is not None and body_name in self.ik_match_table1:
+                robot_body_name = self.ik_match_table1[body_name][0]
+                (hum_pos, hum_rot) = human_motion_data[robot_body_name]
+                rel_vec = pos - hum_pos
+                print(f"[blue]{robot_body_name}[/blue]: Human Pos {hum_pos}, Robot Pos {pos}, Rel Vector {rel_vec}")
+            
+            draw_frame(
+                pos,
+                rot,
+                self.viewer,
+                size=0.05,  # adjust size for visualization
+                joint_name=body_name  # optional, label the link
+            )
 
         self.viewer.sync()
         if rate_limit is True:
