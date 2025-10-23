@@ -226,8 +226,8 @@ class RobotMotionViewer:
                 (H_pos, H_rot) = human_motion_data[human_body_name]
                 rel_vec = R_pos - H_pos # robot link pos - human link pos
                 rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(R_wxyz, scalar_first=True)
-                # print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
-                # print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
+                print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
+                print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
 
             
                 draw_frame(
