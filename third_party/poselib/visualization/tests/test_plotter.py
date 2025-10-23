@@ -2,10 +2,10 @@ from typing import cast
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from ..core import BasePlotterTask, BasePlotterTasks
-from ..plt_plotter import Matplotlib3DPlotter
-from ..simple_plotter_tasks import Draw3DDots, Draw3DLines
+# from poselib.core import BasePlotterTask, BasePlotterTasks
+from core import BasePlotterTask, BasePlotterTasks
+from plt_plotter import Matplotlib3DPlotter
+from simple_plotter_tasks import Draw3DDots, Draw3DLines
 
 task = Draw3DLines(task_name="test", 
     lines=np.array([[[0, 0, 0], [0, 0, 1]], [[0, 1, 1], [0, 1, 0]]]), color="blue")

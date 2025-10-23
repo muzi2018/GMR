@@ -3,7 +3,7 @@ This is where all the task primitives are defined
 """
 import numpy as np
 
-from .core import BasePlotterTask
+from core import BasePlotterTask
 
 
 class DrawXDLines(BasePlotterTask):

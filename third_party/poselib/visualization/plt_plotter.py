@@ -9,7 +9,7 @@ import mpl_toolkits.mplot3d.axes3d as p3
 
 import numpy as np
 
-from .core import BasePlotter, BasePlotterTask
+from core import BasePlotter, BasePlotterTask
 
 
 class Matplotlib2DPlotter(BasePlotter):
