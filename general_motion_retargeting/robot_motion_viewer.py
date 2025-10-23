@@ -266,6 +266,12 @@ class RobotMotionViewer:
                     quat_wxyz = R.from_matrix(R_mat).as_quat()
                     quat_wxyz = np.roll(quat_wxyz, 1)  # MuJoCo uses [w, x, y, z]
                     print(f"{'pelvis'}: local={local_axis}, global={quat_wxyz}")
+                    
+                    # for debugging: compute relative pos/rot between human and robot 
+                    (H_pos, H_rot) = human_motion_data[human_body_name]
+                    rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(quat_wxyz, scalar_first=True)
+                    print(f"[yellow]{human_body_name} , {H_rot}, {'pelvis'} {quat_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
+                    
                     draw_joint_axis(
                         pos=joint_pos,
                         axis=local_axis,
