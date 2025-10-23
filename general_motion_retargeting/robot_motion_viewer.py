@@ -265,8 +265,10 @@ class RobotMotionViewer:
                     size=0.1,
                     joint_name=joint_name
                 )
-
-
+                local_axis = self.model.jnt_axis[i]
+                global_axis = self.data.xaxis[i]
+                print(f"{joint_name}: local={local_axis}, global={global_axis}")
+                
         ''' draw robot frames for debugging'''        
         # for i in range(self.model.nbody):
         #     body_name = self.model.body(i).name
