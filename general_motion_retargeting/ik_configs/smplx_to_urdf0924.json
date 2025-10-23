@@ -30,13 +30,13 @@
             100,
             10,
             [
-                0.0,
+                5.0,
                 0.0,
                 0.0
             ],
             [1, 0, 0, 0]
         ],
-        "right_hip_roll_link": [
+        "left_hip_roll_link": [
             "left_hip",
             0,
             10,
@@ -52,7 +52,7 @@
                 0.0
             ]
         ],
-        "right_knee_link": [
+        "left_knee_link": [
             "left_knee",
             0,
             10,
@@ -70,7 +70,7 @@
 
             ]
         ],
-        "right_ankle_pitch_link": [
+        "left_ankle_pitch_link": [
             "left_foot",
             100,
             10,
@@ -88,7 +88,7 @@
 
             ]
         ],
-        "left_hip_roll_link": [
+        "right_hip_roll_link": [
             "right_hip",
             0,
             10,
@@ -106,7 +106,7 @@
 
             ]
         ],
-        "left_knee_link": [
+        "right_knee_link": [
             "right_knee",
             0,
             10,
@@ -124,7 +124,7 @@
 
             ]
         ],
-        "left_ankle_pitch_link": [
+        "right_ankle_pitch_link": [
             "right_foot",
             100,
             10,
@@ -160,7 +160,7 @@
 
             ]
         ],
-        "right_shoulder_roll_link": [
+        "left_shoulder_roll_link": [
             "left_shoulder",
             0,
             10,
@@ -178,7 +178,7 @@
 
             ]
         ],
-        "right_elbow_link": [
+        "left_elbow_link": [
             "left_elbow",
             0,
             10,
@@ -196,7 +196,7 @@
 
             ]
         ],
-        "right_wrist_yaw_link": [
+        "left_wrist_yaw_link": [
             "left_wrist",
             0,
             10,
@@ -214,7 +214,7 @@
 
             ]
         ],
-        "left_shoulder_roll_link": [
+        "right_shoulder_roll_link": [
             "right_shoulder",
             0,
             10,
@@ -232,7 +232,7 @@
 
             ]
         ],
-        "left_elbow_link": [
+        "right_elbow_link": [
             "right_elbow",
             0,
             10,
@@ -250,7 +250,7 @@
 
             ]
         ],
-        "left_wrist_yaw_link": [
+        "right_wrist_yaw_link": [
             "right_wrist",
             0,
             10,
