@@ -245,40 +245,46 @@ class RobotMotionViewer:
             self.viewer.user_scn.ngeom = 0
             # Draw the task targets for reference
             for human_body_name, (pos, rot) in human_motion_data.items():
-                if human_body_name == "pelvis":
-                    joint_id = self.model.joint('pelvis').id
-                    joint_pos = self.data.xpos[self.model.jnt_bodyid[joint_id]]
-                    local_axis = self.model.jnt_axis[joint_id]
-                    global_axis = self.data.xaxis[joint_id]
-                    global_axis = global_axis / (np.linalg.norm(global_axis) + 1e-8)
-                    
-                    
-                    
-                    # pick an arbitrary vector not parallel to axis
-                    tmp = np.array([1, 0, 0]) if abs(global_axis[0]) < 0.9 else np.array([0, 1, 0])
-                    # compute orthogonal basis
-                    x_axis = np.cross(tmp, global_axis)
-                    x_axis /= np.linalg.norm(x_axis)
-                    y_axis = np.cross(global_axis, x_axis)
-                    # assemble rotation matrix
-                    R_mat = np.column_stack((x_axis, y_axis, global_axis))
-                    # convert to quaternion (scalar-first)
-                    quat_wxyz = R.from_matrix(R_mat).as_quat()
-                    quat_wxyz = np.roll(quat_wxyz, 1)  # MuJoCo uses [w, x, y, z]
-                    print(f"{'pelvis'}: local={local_axis}, global={quat_wxyz}")
-                    
-                    # for debugging: compute relative pos/rot between human and robot 
-                    (H_pos, H_rot) = human_motion_data[human_body_name]
-                    rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(quat_wxyz, scalar_first=True)
-                    print(f"[yellow]{human_body_name} , {H_rot}, {'pelvis'} {quat_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
-                    
-                    draw_joint_axis(
-                        pos=joint_pos,
-                        axis=local_axis,
-                        v=self.viewer,
-                        size=0.1,
-                        joint_name='pelvis'
-                    )
+                for k, v in self.ik_match_table1.items():
+                    if human_body_name == v[0]: # if the human body is in the ik table
+                        if human_body_name == "pelvis": # if the human body is pelvis
+                            joint_name_ = "pelvis" # asign pelvis joint name
+                            joint_id = self.model.joint(joint_name_).id # get pelvis joint id
+                        else:
+                            joint_name_ = k.removesuffix("_link") # if not pelvis, get the corresponding joint name
+                            joint_name_ = joint_name_ + "_joint" # assign the joint name
+                            joint_id = self.model.joint(joint_name_).id # get the joint id
+                        joint_pos = self.data.xpos[self.model.jnt_bodyid[joint_id]]
+                        local_axis = self.model.jnt_axis[joint_id]
+                        global_axis = self.data.xaxis[joint_id]
+                        global_axis = global_axis / (np.linalg.norm(global_axis) + 1e-8)
+
+                        # pick an arbitrary vector not parallel to axis
+                        tmp = np.array([1, 0, 0]) if abs(global_axis[0]) < 0.9 else np.array([0, 1, 0])
+                        # compute orthogonal basis
+                        x_axis = np.cross(tmp, global_axis)
+                        x_axis /= np.linalg.norm(x_axis)
+                        y_axis = np.cross(global_axis, x_axis)
+                        # assemble rotation matrix
+                        R_mat = np.column_stack((x_axis, y_axis, global_axis))
+                        # convert to quaternion (scalar-first)
+                        quat_wxyz = R.from_matrix(R_mat).as_quat()
+                        quat_wxyz = np.roll(quat_wxyz, 1)  # MuJoCo uses [w, x, y, z]
+                        R_Joint_loc = local_axis
+                        R_Joint_glo = quat_wxyz
+                        # print(f"{joint_name_}: local={R_Joint_loc}, global={R_Joint_glo}")
+                        # for debugging: compute relative pos/rot between human and robot 
+                        (H_Joint_g_pos, H_Joint_g_rot) = human_motion_data[human_body_name]
+                        rel_rot = R.from_quat(H_Joint_g_rot, scalar_first=True).inv() * R.from_quat(R_Joint_glo, scalar_first=True)
+                        print(f"[yellow]{human_body_name} , {H_Joint_g_rot}, {joint_name_} {R_Joint_glo}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
+                        
+                        draw_joint_axis(
+                            pos=joint_pos,
+                            axis=local_axis,
+                            v=self.viewer,
+                            size=0.1,
+                            joint_name=joint_name_
+                        )
                     
                 draw_frame(
                     pos,
