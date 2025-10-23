@@ -161,7 +161,13 @@ class GeneralMotionRetargeting:
             for body_name in self.human_body_to_task1.keys():
                 task = self.human_body_to_task1[body_name]
                 pos, rot = human_data[body_name]
-                task.set_target(mink.SE3.from_rotation_and_translation(mink.SO3(rot), pos))
+                rot = np.array(rot)
+                r = R.from_quat(rot, scalar_first=True)
+                mirror = R.from_euler('y', 0, degrees=True)
+                r_new = mirror * r
+                rot_flipped = r_new.as_quat(scalar_first=True)
+                task.set_target(mink.SE3.from_rotation_and_translation(mink.SO3(rot_flipped), pos))
+     
         
         if self.use_ik_match_table2:
             for body_name in self.human_body_to_task2.keys():

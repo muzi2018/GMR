@@ -278,13 +278,13 @@ class RobotMotionViewer:
                         rel_rot = R.from_quat(H_Joint_g_rot, scalar_first=True).inv() * R.from_quat(R_Joint_glo, scalar_first=True)
                         print(f"[yellow]{human_body_name} , {H_Joint_g_rot}, {joint_name_} {R_Joint_glo}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
                         
-                        draw_joint_axis(
-                            pos=joint_pos,
-                            axis=local_axis,
-                            v=self.viewer,
-                            size=0.1,
-                            joint_name=joint_name_
-                        )
+                        # draw_joint_axis(
+                        #     pos=joint_pos,
+                        #     axis=local_axis,
+                        #     v=self.viewer,
+                        #     size=0.1,
+                        #     joint_name=joint_name_
+                        # )
                     
                 draw_frame(
                     pos,
