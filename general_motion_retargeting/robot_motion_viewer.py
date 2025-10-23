@@ -10,6 +10,55 @@ import numpy as np
 from rich import print
 import json
 from .params import ROBOT_XML_DICT, IK_CONFIG_DICT
+
+
+def draw_joint_axis(
+    pos,
+    axis,
+    v,
+    size=0.1,
+    joint_name=None,
+    color=[1, 1, 0, 1],  # 默认黄色
+    pos_offset=np.array([0, 0, 0]),
+):
+    """
+    Draw a visual arrow to represent a joint axis in MuJoCo viewer.
+
+    Args:
+        pos: np.array(3,), the global position of the joint
+        axis: np.array(3,), the global direction vector of the joint axis
+        v: mujoco.viewer object
+        size: float, arrow length scale
+        joint_name: optional string, label for the joint
+        color: list(4), RGBA color for the arrow
+        pos_offset: np.array(3,), optional positional offset
+    """
+    # 初始化几何体
+    geom = v.user_scn.geoms[v.user_scn.ngeom]
+    mj.mjv_initGeom(
+        geom,
+        type=mj.mjtGeom.mjGEOM_ARROW,
+        size=[0.005, 0.005, 0.005],
+        pos=pos + pos_offset,
+        mat=np.eye(3).flatten(),
+        rgba=color,
+    )
+
+    if joint_name is not None:
+        geom.label = joint_name  # 标注关节名
+    
+    # 画出沿轴方向的箭头
+    mj.mjv_connector(
+        v.user_scn.geoms[v.user_scn.ngeom],
+        type=mj.mjtGeom.mjGEOM_ARROW,
+        width=0.003,
+        from_=pos + pos_offset,
+        to=pos + pos_offset + size * axis / (np.linalg.norm(axis) + 1e-8),
+    )
+    v.user_scn.ngeom += 1
+
+
+
 def compute_distance_vectors(self, ik_table, pos_offset_dict=None, visualize=False):
     """
     Compute distance vectors from robot links to target links (from IK table).
@@ -204,38 +253,52 @@ class RobotMotionViewer:
                     pos_offset=human_pos_offset,
                     joint_name=human_body_name if show_human_body_name else None
                     )
-                
-        for i in range(self.model.nbody):
-            body_name = self.model.body(i).name
-            R_pos = self.data.xpos[i]           # global position of the link
-            R_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
-            R_xyzw = R.from_matrix(R_rot).as_quat()
-            R_wxyz = np.roll(R_xyzw, 1)
 
-            if human_motion_data is not None and body_name in self.ik_match_table1 :
-                human_body_name = self.ik_match_table1[body_name][0]
-                (H_pos, H_rot) = human_motion_data[human_body_name]
-                rel_vec = R_pos - H_pos # robot link pos - human link pos
-                rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(R_wxyz, scalar_first=True)
-                print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
-                print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
-
-                draw_frame(
-                    R_pos,
-                    R_rot,
-                    self.viewer,
-                    size=0.05,  # adjust size for visualization
-                    joint_name=body_name  # optional, label the link
+            for i in range(self.model.njnt):
+                joint_name = self.model.joint(i).name
+                joint_pos = self.data.xpos[self.model.jnt_bodyid[i]]
+                joint_axis = self.data.xaxis[i]
+                draw_joint_axis(
+                    pos=joint_pos,
+                    axis=joint_axis,
+                    v=self.viewer,
+                    size=0.1,
+                    joint_name=joint_name
                 )
 
-            if body_name == "world":
-                draw_frame(
-                    R_pos,
-                    R_rot,
-                    self.viewer,
-                    size=0.2,  # adjust size for visualization
-                    joint_name=body_name  # optional, label the link
-                )
+
+        ''' draw robot frames for debugging'''        
+        # for i in range(self.model.nbody):
+        #     body_name = self.model.body(i).name
+        #     R_pos = self.data.xpos[i]           # global position of the link
+        #     R_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
+        #     R_xyzw = R.from_matrix(R_rot).as_quat()
+        #     R_wxyz = np.roll(R_xyzw, 1)
+
+        #     if human_motion_data is not None and body_name in self.ik_match_table1 :
+        #         human_body_name = self.ik_match_table1[body_name][0]
+        #         (H_pos, H_rot) = human_motion_data[human_body_name]
+        #         rel_vec = R_pos - H_pos # robot link pos - human link pos
+        #         rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(R_wxyz, scalar_first=True)
+        #         print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
+        #         print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
+
+        #         draw_frame(
+        #             R_pos,
+        #             R_rot,
+        #             self.viewer,
+        #             size=0.05,  # adjust size for visualization
+        #             joint_name=body_name  # optional, label the link
+        #         )
+
+        #     if body_name == "world":
+        #         draw_frame(
+        #             R_pos,
+        #             R_rot,
+        #             self.viewer,
+        #             size=0.2,  # adjust size for visualization
+        #             joint_name=body_name  # optional, label the link
+        #         )
         self.viewer.sync()
         if rate_limit is True:
             self.rate_limiter.sleep()
