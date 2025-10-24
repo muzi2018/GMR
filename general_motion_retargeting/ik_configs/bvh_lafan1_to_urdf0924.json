@@ -73,14 +73,14 @@
                 -0.5
             ]
         ],
-        "left_ankle_roll_link": [
+        "left_toe_link": [
             "LeftFootMod",
             50,
             10,
             [
                 0.0,
                 0.0,
-                0.0
+                0.15
             ],
             [
                 -0.70710678,
@@ -121,7 +121,7 @@
                 -0.5
             ]
         ],
-        "right_ankle_roll_link": [
+        "right_toe_link": [
             "RightFootMod",
             50,
             10,
@@ -299,7 +299,7 @@
                 -0.5
             ]
         ],
-        "left_ankle_roll_link": [
+        "left_toe_link": [
             "LeftFootMod",
             50,
             10,
@@ -347,7 +347,7 @@
                 -0.5
             ]
         ],
-        "right_ankle_roll_link": [
+        "right_toe_link": [
             "RightFootMod",
             50,
             10,

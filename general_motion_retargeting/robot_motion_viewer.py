@@ -114,7 +114,7 @@ class RobotMotionViewer:
                 keyboard_callback=None,
                 ):
         # Load the IK config
-        with open(IK_CONFIG_DICT["smplx"]["urdf0924"], encoding="utf-8-sig") as f:
+        with open(IK_CONFIG_DICT["bvh_lafan1"]["urdf0924"], encoding="utf-8-sig") as f:
             ik_config = json.load(f)
             
         self.ik_match_table1 = ik_config["ik_match_table1"]
@@ -205,38 +205,38 @@ class RobotMotionViewer:
                     joint_name=human_body_name if show_human_body_name else None
                     )
                 
-        # for i in range(self.model.nbody):
-        #     body_name = self.model.body(i).name
-        #     R_pos = self.data.xpos[i]           # global position of the link
-        #     R_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
-        #     R_xyzw = R.from_matrix(R_rot).as_quat()
-        #     R_wxyz = np.roll(R_xyzw, 1)
+        for i in range(self.model.nbody):
+            body_name = self.model.body(i).name
+            R_pos = self.data.xpos[i]           # global position of the link
+            R_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
+            R_xyzw = R.from_matrix(R_rot).as_quat()
+            R_wxyz = np.roll(R_xyzw, 1)
             
-        #     if body_name == "world":
-        #         draw_frame(
-        #             R_pos,
-        #             R_rot,
-        #             self.viewer,
-        #             size=0.05,  # adjust size for visualization
-        #             joint_name=body_name  # optional, label the link
-        #         )
+            if body_name == "world":
+                draw_frame(
+                    R_pos,
+                    R_rot,
+                    self.viewer,
+                    size=0.05,  # adjust size for visualization
+                    joint_name=body_name  # optional, label the link
+                )
             
-        #     if human_motion_data is not None and body_name in self.ik_match_table1 :
-        #         human_body_name = self.ik_match_table1[body_name][0]
-        #         (H_pos, H_rot) = human_motion_data[human_body_name]
-        #         rel_vec = R_pos - H_pos # robot link pos - human link pos
-        #         rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(R_wxyz, scalar_first=True)
-        #         print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
-        #         print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
+            if human_motion_data is not None and body_name in self.ik_match_table1 :
+                human_body_name = self.ik_match_table1[body_name][0]
+                (H_pos, H_rot) = human_motion_data[human_body_name]
+                rel_vec = R_pos - H_pos # robot link pos - human link pos
+                rel_rot = R.from_quat(H_rot, scalar_first=True).inv() * R.from_quat(R_wxyz, scalar_first=True)
+                # print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
+                # print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
 
             
-        #         draw_frame(
-        #             R_pos,
-        #             R_rot,
-        #             self.viewer,
-        #             size=0.05,  # adjust size for visualization
-        #             joint_name=body_name  # optional, label the link
-        #         )
+                draw_frame(
+                    R_pos,
+                    R_rot,
+                    self.viewer,
+                    size=0.05,  # adjust size for visualization
+                    joint_name=body_name  # optional, label the link
+                )
 
         self.viewer.sync()
         if rate_limit is True:
