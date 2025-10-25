@@ -95,7 +95,7 @@ if __name__ == "__main__":
     
     robot_motion_viewer = RobotMotionViewer(robot_type=args.robot,
                                             motion_fps=motion_fps,
-                                            transparent_robot=0,
+                                            transparent_robot=1,
                                             record_video=args.record_video,
                                             video_path=args.video_path,
                                             # video_width=2080,
@@ -144,6 +144,7 @@ if __name__ == "__main__":
             root_rot=qpos[3:7],
             dof_pos=qpos[7:],
             human_motion_data=retargeter.scaled_human_data,
+            show_human_body_name=True,
             rate_limit=args.rate_limit,
             follow_camera=True,
             # human_pos_offset=np.array([0.0, 0.0, 0.0])

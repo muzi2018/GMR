@@ -135,8 +135,8 @@ class RobotMotionViewer:
         self.viewer = mjv.launch_passive(
             model=self.model,
             data=self.data,
-            show_left_ui=True,
-            show_right_ui=True, 
+            show_left_ui=False,
+            show_right_ui=False, 
             key_callback=keyboard_callback
             )      
 
@@ -194,7 +194,7 @@ class RobotMotionViewer:
         if human_motion_data is not None:
             # Clean custom geometry
             self.viewer.user_scn.ngeom = 0
-            # Draw the task targets for reference
+
             for human_body_name, (pos, rot) in human_motion_data.items():
                 draw_frame(
                     pos,
@@ -204,6 +204,7 @@ class RobotMotionViewer:
                     pos_offset=human_pos_offset,
                     joint_name=human_body_name if show_human_body_name else None
                     )
+
                 
         for i in range(self.model.nbody):
             body_name = self.model.body(i).name
@@ -248,7 +249,7 @@ class RobotMotionViewer:
             img = self.renderer.render()
             self.mp4_writer.append_data(img)
 
-        compute_distance_vectors(self, ik_table="ik_match_table1", visualize=True)
+        # compute_distance_vectors(self, ik_table="ik_match_table1", visualize=True)
         
     def close(self):
         self.viewer.close()
