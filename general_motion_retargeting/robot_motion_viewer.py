@@ -135,8 +135,8 @@ class RobotMotionViewer:
         self.viewer = mjv.launch_passive(
             model=self.model,
             data=self.data,
-            show_left_ui=False,
-            show_right_ui=False, 
+            show_left_ui=True,
+            show_right_ui=True, 
             key_callback=keyboard_callback
             )      
 
