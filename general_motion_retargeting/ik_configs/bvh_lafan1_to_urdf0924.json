@@ -140,7 +140,7 @@
                 0.5
             ]
         ],
-        "left_shoulder_roll_link": [
+        "left_shoulder_yaw_link": [
             "LeftArm",
             0,
             100,
@@ -180,7 +180,7 @@
             [ 0.97486548,  0.0928184,  -0.20219719,  0.011762  ]
 
         ],
-        "right_shoulder_roll_link": [
+        "right_shoulder_yaw_link": [
             "RightArm",
             0,
             100,
@@ -335,7 +335,7 @@
                 0.5
             ]
         ],
-        "left_shoulder_roll_link": [
+        "left_shoulder_yaw_link": [
             "LeftArm",
             5,
             100,
@@ -373,7 +373,7 @@
             ],
             [ 0.97486548,  0.0928184,  -0.20219719,  0.011762  ]
         ],
-        "right_shoulder_roll_link": [
+        "right_shoulder_yaw_link": [
             "RightArm",
             5,
             100,

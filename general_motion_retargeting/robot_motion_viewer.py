@@ -210,68 +210,68 @@ class RobotMotionViewer:
                 # print(f'link_name {human_body_name} , orientation {rot}')
 
                 
-        for i in range(self.model.nbody):
-            body_name = self.model.body(i).name
-            r_pos = self.data.xpos[i]           # global position of the link
-            r_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
-            r_xyzw = R.from_matrix(r_rot).as_quat()
-            r_wxyz_ = np.roll(r_xyzw, 1)
+        # for i in range(self.model.nbody):
+        #     body_name = self.model.body(i).name
+        #     r_pos = self.data.xpos[i]           # global position of the link
+        #     r_rot = self.data.xmat[i].reshape(3, 3)  # global rotation matrix of the link , left_elbow, left_elbow_link
+        #     r_xyzw = R.from_matrix(r_rot).as_quat()
+        #     r_wxyz_ = np.roll(r_xyzw, 1)
             
-            if body_name == "world":
-                draw_frame(
-                    r_pos,
-                    r_rot,
-                    self.viewer,
-                    size=0.5,  # adjust size for visualization
-                    joint_name=body_name  # optional, label the link
-                )
+        #     if body_name == "world":
+        #         draw_frame(
+        #             r_pos,
+        #             r_rot,
+        #             self.viewer,
+        #             size=0.5,  # adjust size for visualization
+        #             joint_name=body_name  # optional, label the link
+        #         )
             
-            if human_motion_data is not None and body_name in self.ik_match_table1 :
-                human_body_name = self.ik_match_table1[body_name][0]
-                (h_pos, h_rot_) = human_motion_data[human_body_name]
-                # rel_vec = R_pos - H_pos # robot link pos - human link pos
-                # _, quat_rel = quat_diff_np(h_rot, r_wxyz)
-                h_rot = np.array(h_rot_)
-                h_rot = h_rot.reshape(1,4)
-                euler = euler_from_quaternion_np(h_rot)
-                # print(f"[blue]{human_body_name} -> {body_name} {quat_rel}")
-                # print(f"[blue]{human_body_name} ori = {euler}")
+        #     if human_motion_data is not None and body_name in self.ik_match_table1 :
+        #         human_body_name = self.ik_match_table1[body_name][0]
+        #         (h_pos, h_rot_) = human_motion_data[human_body_name]
+        #         # rel_vec = R_pos - H_pos # robot link pos - human link pos
+        #         # _, quat_rel = quat_diff_np(h_rot, r_wxyz)
+        #         h_rot = np.array(h_rot_)
+        #         h_rot = h_rot.reshape(1,4)
+        #         euler = euler_from_quaternion_np(h_rot)
+        #         # print(f"[blue]{human_body_name} -> {body_name} {quat_rel}")
+        #         # print(f"[blue]{human_body_name} ori = {euler}")
                 
-                r_wxyz = np.array(r_wxyz_)
-                r_wxyz = r_wxyz.reshape(1,4)
-                euler = euler_from_quaternion_np(r_wxyz)
-                # print(f"[red]{body_name} ori = {euler}")
+        #         r_wxyz = np.array(r_wxyz_)
+        #         r_wxyz = r_wxyz.reshape(1,4)
+        #         euler = euler_from_quaternion_np(r_wxyz)
+        #         # print(f"[red]{body_name} ori = {euler}")
                 
-                _, quat_rel = quat_diff_np(r_wxyz, h_rot_)
-                updated_quat = (R.from_quat(h_rot_, scalar_first=True) * R.from_quat(quat_rel, scalar_first=True)).as_quat(scalar_first=True)
+        #         _, quat_rel = quat_diff_np(r_wxyz, h_rot_)
+        #         updated_quat = (R.from_quat(h_rot_, scalar_first=True) * R.from_quat(quat_rel, scalar_first=True)).as_quat(scalar_first=True)
                 
-                updated_quat = np.array(updated_quat)
-                updated_quat = updated_quat.reshape(1,4)
-                euler = euler_from_quaternion_np(updated_quat)
-                # print(f'after offset : {euler}')
+        #         updated_quat = np.array(updated_quat)
+        #         updated_quat = updated_quat.reshape(1,4)
+        #         euler = euler_from_quaternion_np(updated_quat)
+        #         # print(f'after offset : {euler}')
                 
                 
-                h_rotsci = R.from_quat(h_rot, scalar_first=True)
-                print(f"[blue]{human_body_name} ori = {h_rot}")
-                r_rotsci = R.from_quat(r_wxyz, scalar_first=True)
-                print(f"[red]{body_name} ori = {r_wxyz}")
-                rot_offset = h_rotsci.inv() * r_rotsci
-                updated = h_rotsci * rot_offset
-                print(f'offset: {rot_offset.as_quat(scalar_first=True)}')
-                print(updated.as_quat(scalar_first=True))  # 应该等于 r_wxyz
+        #         h_rotsci = R.from_quat(h_rot, scalar_first=True)
+        #         print(f"[blue]{human_body_name} ori = {h_rot}")
+        #         r_rotsci = R.from_quat(r_wxyz, scalar_first=True)
+        #         print(f"[red]{body_name} ori = {r_wxyz}")
+        #         rot_offset = h_rotsci.inv() * r_rotsci
+        #         updated = h_rotsci * rot_offset
+        #         print(f'offset: {rot_offset.as_quat(scalar_first=True)}')
+        #         print(updated.as_quat(scalar_first=True))  # 应该等于 r_wxyz
 
-                # print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
-                # print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
+        #         # print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
+        #         # print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
 
             
-                draw_frame(
-                    r_pos,
-                    r_rot,
-                    self.viewer,
-                    size=0.05,  # adjust size for visualization
-                    joint_name=body_name  # optional, label the link
-                )
-                # print(f'link_name {body_name} , orientation {R_wxyz}')
+        #         draw_frame(
+        #             r_pos,
+        #             r_rot,
+        #             self.viewer,
+        #             size=0.05,  # adjust size for visualization
+        #             joint_name=body_name  # optional, label the link
+        #         )
+        #         # print(f'link_name {body_name} , orientation {R_wxyz}')
 
         self.viewer.sync()
         if rate_limit is True:
