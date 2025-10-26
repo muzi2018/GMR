@@ -252,12 +252,13 @@ class RobotMotionViewer:
                 
                 
                 h_rotsci = R.from_quat(h_rot, scalar_first=True)
-                # print(f"[blue]{human_body_name} ori = {h_rot}")
+                print(f"[blue]{human_body_name} ori = {h_rot}")
                 r_rotsci = R.from_quat(r_wxyz, scalar_first=True)
-                # print(f"[red]{body_name} ori = {r_wxyz}")
+                print(f"[red]{body_name} ori = {r_wxyz}")
                 rot_offset = h_rotsci.inv() * r_rotsci
                 updated = h_rotsci * rot_offset
-                # print(updated.as_quat(scalar_first=True))  # 应该等于 r_wxyz
+                print(f'offset: {rot_offset.as_quat(scalar_first=True)}')
+                print(updated.as_quat(scalar_first=True))  # 应该等于 r_wxyz
 
                 # print(f"[blue]{human_body_name} , {H_pos}, {body_name} {R_pos}, Rel Vec {rel_vec}")
                 # print(f"[yellow]{human_body_name} , {H_rot}, {body_name} {R_wxyz}, Rel Angl_Vec {rel_rot.as_quat(scalar_first=True)}")
