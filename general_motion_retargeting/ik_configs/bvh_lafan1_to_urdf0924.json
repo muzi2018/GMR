@@ -13,7 +13,7 @@
         "Spine2": "distance Hips -> ground = 0.84m"
     },
     "human_scale_table": {
-        "Hips": 0.9, 
+        "Hips": 0.93, 
         "Spine2": 0.9,
 
         "LeftUpLeg": 0.9,
@@ -89,7 +89,12 @@
                 0.0,
                 0.0
             ],
-            [ 1.0, 0.0, 0.0, 0.0]
+            [
+                -0.70710678,
+                0.70710678,
+                0.0,
+                0.0
+            ]
         ],
         "right_hip_yaw_link": [
             "RightUpLeg",
@@ -310,7 +315,12 @@
                 0.0,
                 0.0
             ],
-            [ 1.0, 0.0, 0.0, 0.0]
+            [
+                -0.70710678,
+                0.70710678,
+                0.0,
+                0.0
+            ]
         ],
         "right_hip_yaw_link": [
             "RightUpLeg",
