@@ -164,5 +164,23 @@ def quat_diff_np(q1, q2, scalar_first=True):
 
     # Rotation vector (axis * angle)
     rotvec = r_rel.as_rotvec()  # returns angle * axis vector
+    
+    # Convert relative rotation to quaternion
+    quat_rel = r_rel.as_quat()  # [x, y, z, w]
+    if scalar_first:
+        quat_rel = np.roll(quat_rel, 1)  # back to [w, x, y, z]
 
-    return rotvec
+    return rotvec, quat_rel
+
+
+if __name__ == "__main__":
+
+    # right_toe_link -> RightFoodMod ; robot -> human
+    q1_r = np.array([ 0.73102284,  0.14114773, -0.15010744, -0.65050033])
+    q2_h = np.array([-0.34295687, -0.35395524,  0.60414445,  0.62618349])
+    
+    # q1_l = np.array([ 0.53361944,  0.56407325, -0.42800135, -0.46247866])
+    # q2_l = np.array([ 0.76296703,  0.20700137, -0.17041188, -0.58821045])
+    _, quat_rel = quat_diff_np(q1_r, q2_h)
+    print(quat_rel)
+    
