@@ -5,32 +5,23 @@
     "human_height_assumption": 1.8,
     "use_ik_match_table1": true,
     "use_ik_match_table2": true,
-    "information":{
-        "actual_human_heigh": "1.75",
-        "Hips": "distance Hips -> ground = 0.84m",
-        "pelvis": "distance pelvis -> ground = 0.72m",
-
-        "Spine2": "distance Hips -> ground = 0.84m"
-
-
-    },
     "human_scale_table": {
-        "Hips": 0.93, 
-        "Spine2": 0.7,
+        "Hips": 0.9,
+        "Spine2": 0.9,
 
         "LeftUpLeg": 0.9,
         "RightUpLeg": 0.9,
         "LeftLeg": 0.9,
         "RightLeg": 0.9,
-        "LeftFootMod": 0.95,
-        "RightFootMod": 0.95,
+        "LeftFootMod": 0.9,
+        "RightFootMod": 0.9,
 
-        "LeftArm": 0.9,
-        "RightArm": 0.9,
-        "LeftForeArm": 0.9,
-        "RightForeArm": 0.9,
-        "LeftHand": 0.9,
-        "RightHand": 0.9
+        "LeftArm": 0.75,
+        "RightArm": 0.75,
+        "LeftForeArm": 0.75,
+        "RightForeArm": 0.75,
+        "LeftHand": 0.75,
+        "RightHand": 0.75
     },
 
     "ik_match_table1": {
@@ -40,7 +31,7 @@
             10,
             [
                 0.0,
-                0.2,
+                0.0,
                 0.0
             ],
             [
@@ -50,7 +41,7 @@
                 0.5
             ]
         ],
-        "left_hip_roll_link": [
+        "left_hip_yaw_link": [
             "LeftUpLeg",
             0,
             10,
@@ -82,7 +73,7 @@
                 -0.5
             ]
         ],
-        "left_toe_link": [
+        "left_ankle_roll_link": [
             "LeftFootMod",
             50,
             10,
@@ -98,7 +89,7 @@
                 0.0
             ]
         ],
-        "right_hip_roll_link": [
+        "right_hip_yaw_link": [
             "RightUpLeg",
             0,
             10,
@@ -130,7 +121,7 @@
                 -0.5
             ]
         ],
-        "right_toe_link": [
+        "right_ankle_roll_link": [
             "RightFootMod",
             50,
             10,
@@ -276,7 +267,7 @@
                 0.5
             ]
         ],
-        "left_hip_roll_link": [
+        "left_hip_yaw_link": [
             "LeftUpLeg",
             10,
             5,
@@ -308,7 +299,7 @@
                 -0.5
             ]
         ],
-        "left_toe_link": [
+        "left_ankle_roll_link": [
             "LeftFootMod",
             50,
             10,
@@ -324,7 +315,7 @@
                 0.0
             ]
         ],
-        "right_hip_roll_link": [
+        "right_hip_yaw_link": [
             "RightUpLeg",
             10,
             5,
@@ -356,7 +347,7 @@
                 -0.5
             ]
         ],
-        "right_toe_link": [
+        "right_ankle_roll_link": [
             "RightFootMod",
             50,
             10,
